@@ -3,7 +3,9 @@ using NHTSAVehicleData.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
 
 namespace NHTSAVehicleData.Core
 {
@@ -18,7 +20,52 @@ namespace NHTSAVehicleData.Core
             _httpClient = new HttpClient();
         }
 
-        public TModelOut Get<TModelOut>(params string[] parameters) where TModelOut : class
+        public async Task<TModelOut> GetAsync<TModelOut>(params string[] urlParameters) where TModelOut : class
+        {
+            return await GetAsync<TModelOut>(urlParameters, null);
+        }
+
+        public async Task<TModelOut> GetAsync<TModelOut>(string[] urlParameters, Dictionary<string, string> queryParameters) where TModelOut : class
+        {
+            UriBuilder uriBuilder = new UriBuilder(_baseUrl);
+
+            if (queryParameters == null)
+                queryParameters = new Dictionary<string, string>();
+
+            if (urlParameters != null && urlParameters.Any())
+            {
+                if (!uriBuilder.Path.EndsWith("/"))
+                    uriBuilder.Path += "/";
+
+                foreach (var parameter in urlParameters)
+                {
+                    uriBuilder.Path += $"{parameter}/";
+                }
+            }
+
+            if (uriBuilder.Path.EndsWith("/"))
+                uriBuilder.Path = uriBuilder.Path.Substring(0, uriBuilder.Path.Length - 1);
+
+
+            if (!queryParameters.ContainsKey("format"))
+                queryParameters.Add("format", "json");
+
+            string sp = string.Join("&", queryParameters.Select(t => $"{t.Key}={WebUtility.UrlEncode(t.Value)}"));
+
+            string reqUrl = uriBuilder.Uri.ToString();
+            reqUrl += $"?{sp}";
+
+            HttpResponseMessage responseMessage = await _httpClient.GetAsync(reqUrl);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(await responseMessage.Content?.ReadAsStringAsync());
+            }
+            string msg = await responseMessage.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<TModelOut>(msg);
+        }
+
+        public async Task<TModelOut> PostAsync<TModelOut>(ICollection<KeyValuePair<string, string>> data, params string[] parameters) where TModelOut : class
         {
             UriBuilder uriBuilder = new UriBuilder(_baseUrl);
             if (parameters != null)
@@ -31,14 +78,18 @@ namespace NHTSAVehicleData.Core
                 }
             }
 
-            if (uriBuilder.Path.EndsWith("/"))
-                uriBuilder.Path = uriBuilder.Path.Substring(0, uriBuilder.Path.Length - 1);
+            if (!data.Any(t => t.Key.Equals("format", StringComparison.CurrentCultureIgnoreCase)))
+            {
+                data.Add(new KeyValuePair<string, string>("format", "JSON"));
+            }
 
-            string reqUrl = uriBuilder.Uri.ToString();
-            reqUrl += "?format=json";
-
-            HttpResponseMessage responseMessage = _httpClient.GetAsync(reqUrl).GetAwaiter().GetResult();
-            string msg = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            FormUrlEncodedContent content = new FormUrlEncodedContent(data);
+            HttpResponseMessage responseMessage = await _httpClient.PostAsync(uriBuilder.Uri.ToString(), content);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(await responseMessage.Content?.ReadAsStringAsync());
+            }
+            string msg = await responseMessage.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<TModelOut>(msg);
         }

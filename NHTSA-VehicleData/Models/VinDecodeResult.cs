@@ -4,17 +4,6 @@ using System.Text;
 
 namespace NHTSAVehicleData.Models
 {
-    public class VinDecode
-    {
-        public int Count { get; set; }
-
-        public string Message { get; set; }
-
-        public string SearchCriteria { get; set; }
-
-        public IEnumerable<VinDecodeResult> Results { get; set; } = new List<VinDecodeResult>();
-    }
-
     public class VinDecodeResult
     {
         public string ABS { get; set; }

@@ -6,6 +6,7 @@ using NHTSAVehicleData.Core.Attributes;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using NHTSACLI.Core;
 
 namespace NHTSACLI
 {
@@ -103,7 +104,7 @@ namespace NHTSACLI
                  var cParam = commandParameters.Where(t => t.Key.Equals(item.Name, StringComparison.CurrentCultureIgnoreCase));
                 if (cParam.Count() == 1)
                 {
-                    funcParameters[fIndex] = cParam.Single().Value;
+                    funcParameters[fIndex] = ParameterConverter.Convert(cParam.Single().Value, item.ParameterType);
                     fIndex++;
                 }
             }
