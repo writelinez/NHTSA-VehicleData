@@ -258,154 +258,441 @@ namespace NHTSAVehicleData
             return GetManufacturerDetailsAsync(manufacturer).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns all the Makes in the vPIC dataset for a specified manufacturer whose name is LIKE the manufacturer name in vPIC Dataset. Manufacturer name can be a partial name, or a full name for more specificity (e.g., "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+        /// </summary>
+        /// <param name="manufacturer"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<ManufacturerMakesResult>> GetMakesForManufacturerByManufacturerNameAsync(string manufacturer)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<ManufacturerMakesResult>>("GetMakeForManufacturer", manufacturer);
         }
 
+        /// <summary>
+        /// This returns all the Makes in the vPIC dataset for a specified manufacturer whose name is LIKE the manufacturer name in vPIC Dataset. Manufacturer name can be a partial name, or a full name for more specificity (e.g., "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+        /// </summary>
+        /// <param name="manufacturer"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetMakesForManufacturerByManufacturerName", parameters: "MANUFACTURER", usage: "GetMakesForManufacturerByManufacturerName MANUFACTURER=honda")]
         public VehicleDataResponse<ManufacturerMakesResult> GetMakesForManufacturerByManufacturerName(string manufacturer)
         {
             return GetMakesForManufacturerByManufacturerNameAsync(manufacturer).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns all the Makes in the vPIC dataset for a specified manufacturer whose name is LIKE the manufacturer name in vPIC Dataset and whose Year From and Year To range cover the specified year Manufacturer name can be a partial name, or a full name for more specificity (e.g., "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+        /// </summary>
+        /// <param name="manufacturer"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<ManufacturerDetailedMakesResult>> GetMakesForManufacturerByManufacturerNameAndYearAsync(string manufacturer, int year)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> queryString = new Dictionary<string, string>();
+            queryString.Add("year", year.ToString());
+
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<ManufacturerDetailedMakesResult>>(new string[] { "GetMakesForManufacturerAndYear", manufacturer }, queryString);
         }
 
+        /// <summary>
+        /// This returns all the Makes in the vPIC dataset for a specified manufacturer whose name is LIKE the manufacturer name in vPIC Dataset and whose Year From and Year To range cover the specified year Manufacturer name can be a partial name, or a full name for more specificity (e.g., "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+        /// </summary>
+        /// <param name="manufacturer"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetMakesForManufacturerByManufacturerNameAndYear", parameters: "MANUFACTURER, YEAR", usage: "GetMakesForManufacturerByManufacturerNameAndYear MANUFACTURER=mer YEAR=2013")]
         public VehicleDataResponse<ManufacturerDetailedMakesResult> GetMakesForManufacturerByManufacturerNameAndYear(string manufacturer, int year)
         {
             return GetMakesForManufacturerByManufacturerNameAndYearAsync(manufacturer, year).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns all the Makes in the vPIC dataset for a specified vehicle type whose name is LIKE the vehicle type name in vPIC Dataset. Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="vehType"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<MakesWithVehicleTypeResult>> GetMakesForVehicleTypeByVehicleTypeNameAsync(string vehType)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<MakesWithVehicleTypeResult>>("GetMakesForVehicleType", vehType);
         }
 
+        /// <summary>
+        /// This returns all the Makes in the vPIC dataset for a specified vehicle type whose name is LIKE the vehicle type name in vPIC Dataset. Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="vehType"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetMakesForVehicleTypeByVehicleTypeName", parameters: "VEHTYPE", usage: "GetMakesForVehicleTypeByVehicleTypeName VEHTYPE=car")]
         public VehicleDataResponse<MakesWithVehicleTypeResult> GetMakesForVehicleTypeByVehicleTypeName(string vehType)
         {
             return GetMakesForVehicleTypeByVehicleTypeNameAsync(vehType).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns all the Vehicle Types in the vPIC dataset for a specified Make whose name is LIKE the make name in vPIC Dataset. Make name can be a partial name, or a full name for more specificity (e.g., "Merc", "Mercedes Benz", etc.)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<MakesWithVehicleTypeResult>> GetVehicleTypesForMakeByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<MakesWithVehicleTypeResult>>("GetVehicleTypesForMake", name);
         }
 
+        /// <summary>
+        /// This returns all the Vehicle Types in the vPIC dataset for a specified Make whose name is LIKE the make name in vPIC Dataset. Make name can be a partial name, or a full name for more specificity (e.g., "Merc", "Mercedes Benz", etc.)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetVehicleTypesForMakeByName", parameters: "NAME", usage: "GetVehicleTypesForMakeByName NAME=mercedes")]
         public VehicleDataResponse<MakesWithVehicleTypeResult> GetVehicleTypesForMakeByName(string name)
         {
             return GetVehicleTypesForMakeByNameAsync(name).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns all the Vehicle Types in the vPIC dataset for a specified Make whose ID equals the make ID in vPIC Dataset.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<VehicleTypesResult>> GetVehicleTypesForMakeByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<VehicleTypesResult>>("GetVehicleTypesForMakeId", id.ToString());
         }
 
+        /// <summary>
+        /// This returns all the Vehicle Types in the vPIC dataset for a specified Make whose ID equals the make ID in vPIC Dataset.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetVehicleTypesForMakeById", parameters: "ID", usage: "GetVehicleTypesForMakeById ID=450")]
         public VehicleDataResponse<VehicleTypesResult> GetVehicleTypesForMakeById(int id)
         {
             return GetVehicleTypesForMakeByIdAsync(id).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<ModelsResult>> GetModelsForMakeAsync(string make)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<ModelsResult>>("GetModelsForMake", make);
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsForMake", parameters: "MAKE", usage: "GetModelsForMake MAKE=honda")]
         public VehicleDataResponse<ModelsResult> GetModelsForMake(string make)
         {
             return GetModelsForMakeAsync(make).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified Make whose Id is EQUAL the MakeId in vPIC Dataset.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<ModelsResult>> GetModelsForMakeIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<ModelsResult>>("GetModelsForMakeId", id.ToString());
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified Make whose Id is EQUAL the MakeId in vPIC Dataset.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsForMakeId", parameters: "ID", usage: "GetModelsForMakeId ID=440")]
         public VehicleDataResponse<ModelsResult> GetModelsForMakeId(int id)
         {
             return GetModelsForMakeIdAsync(id).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <param name="modelYear"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<ModelsResult>> GetModelsByMakeAndModelYearAsync(string make, int modelYear)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<ModelsResult>>("GetModelsForMakeYear", "make", make, "modelyear", modelYear.ToString());
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <param name="modelYear"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsByMakeAndModelYear", parameters: "MAKE,MODELYEAR", usage: "GetModelsByMakeAndModelYear MAKE=honda MODELYEAR=2015")]
         public VehicleDataResponse<ModelsResult> GetModelsByMakeAndModelYear(string make, int modelYear)
         {
             return GetModelsByMakeAndModelYearAsync(make, modelYear).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<MakesWithModelResult>> GetModelsByMakeAndVehicleTypeAsync(string make, string vehicleType)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<MakesWithModelResult>>("GetModelsForMakeYear", "make", make, "vehicletype", vehicleType);
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsByMakeAndVehicleType", parameters: "MAKE,VEHICLETYPE", usage: "GetModelsByMakeAndVehicleType MAKE=honda VEHICLETYPE=truck")]
         public VehicleDataResponse<MakesWithModelResult> GetModelsByMakeAndVehicleType(string make, string vehicleType)
         {
             return GetModelsByMakeAndVehicleTypeAsync(make, vehicleType).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <param name="modelYear"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<MakesWithModelResult>> GetModelsByMakeModelYearAndVehicleTypeAsync(string make, int modelYear, string vehicleType)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<MakesWithModelResult>>("GetModelsForMakeYear", "make", make, "modelyear", modelYear.ToString(), "vehicletype", vehicleType);
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset. Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="make"></param>
+        /// <param name="modelYear"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsByMakeModelYearAndVehicleType", parameters: "MAKE,MODELYEAR,VEHICLETYPE", usage: "GetModelsByMakeModelYearAndVehicleType MAKE=honda MODELYEAR=2015 VEHICLETYPE=truck")]
         public VehicleDataResponse<MakesWithModelResult> GetModelsByMakeModelYearAndVehicleType(string make, int modelYear, string vehicleType)
         {
             return GetModelsByMakeModelYearAndVehicleTypeAsync(make, modelYear, vehicleType).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset. MakeId is integer ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="makeId"></param>
+        /// <param name="modelYear"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<ModelsResult>> GetModelsByMakeIdAndModelYearAsync(int makeId, int modelYear)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<ModelsResult>>("GetModelsForMakeIdYear", "makeid", makeId.ToString(), "modelyear", modelYear.ToString());
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset. MakeId is integer ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="makeId"></param>
+        /// <param name="modelYear"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsByMakeIdAndModelYear", parameters: "MAKEID,MODELYEAR", usage: "GetModelsByMakeIdAndModelYear MAKEID=474 MODELYEAR=2015")]
         public VehicleDataResponse<ModelsResult> GetModelsByMakeIdAndModelYear(int makeId, int modelYear)
         {
             return GetModelsByMakeIdAndModelYearAsync(makeId, modelYear).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset. MakeId is integer ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="makeId"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<MakesWithModelResult>> GetModelsByMakeIdAndVehicleTypeAsync(int makeId, string vehicleType)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<MakesWithModelResult>>("GetModelsForMakeIdYear", "makeid", makeId.ToString(), "vehicletype", vehicleType);
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset. MakeId is integer ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="makeId"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsByMakeIdAndVehicleType", parameters: "MAKEID,VEHICLETYPE", usage: "GetModelsByMakeIdAndVehicleType MAKEID=474 VEHICLETYPE=truck")]
         public VehicleDataResponse<MakesWithModelResult> GetModelsByMakeIdAndVehicleType(int makeId, string vehicleType)
         {
             return GetModelsByMakeIdAndVehicleTypeAsync(makeId, vehicleType).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset. MakeId is integer ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="makeId"></param>
+        /// <param name="modelYear"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<MakesWithModelResult>> GetModelsByMakeIdModelYearAndVehicleTypeAsync(int makeId, int modelYear, string vehicleType)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<MakesWithModelResult>>("GetModelsForMakeIdYear", "makeid", makeId.ToString(), "modelyear", modelYear.ToString(), "vehicletype", vehicleType);
         }
 
+        /// <summary>
+        /// This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset. MakeId is integer ModelYear is integer(greater than 1995) Vehicle Type name can be a partial name, or a full name for more specificity(e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+        /// </summary>
+        /// <param name="makeId"></param>
+        /// <param name="modelYear"></param>
+        /// <param name="vehicleType"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetModelsByMakeIdModelYearAndVehicleType", parameters: "MAKEID,MODELYEAR,VEHICLETYPE", usage: "GetModelsByMakeIdModelYearAndVehicleType MAKEID=474 MODELYEAR=2015 VEHICLETYPE=truck")]
         public VehicleDataResponse<MakesWithModelResult> GetModelsByMakeIdModelYearAndVehicleType(int makeId, int modelYear, string vehicleType)
         {
             return GetModelsByMakeIdModelYearAndVehicleTypeAsync(makeId, modelYear, vehicleType).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This provides a list of all the Vehicle related variables that are in vPIC dataset. Information on the name, description and the type of the variable is provided.
+        /// </summary>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<VariableNamesResult>> GetVehicleVariablesListAsync()
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<VariableNamesResult>>("GetVehicleVariableList");
         }
 
+        /// <summary>
+        /// This provides a list of all the Vehicle related variables that are in vPIC dataset. Information on the name, description and the type of the variable is provided.
+        /// </summary>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetVehicleVariablesList", parameters: "", usage: "GetVehicleVariablesList")]
         public VehicleDataResponse<VariableNamesResult> GetVehicleVariablesList()
         {
             return GetVehicleVariablesListAsync().GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// This provides a list of all the accepted values for a given variable that are stored in vPIC dataset. This applies to only "Look up" type of variables.
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <returns></returns>
         public async Task<VehicleDataResponse<VariableValuesResult>> GetVehicleVariableValuesListAsync(string variableName)
         {
-            throw new NotImplementedException();
+            return await _vehicleDataRestApi.GetAsync<VehicleDataResponse<VariableValuesResult>>("GetVehicleVariableValuesList", variableName);
         }
 
+        /// <summary>
+        /// This provides a list of all the accepted values for a given variable that are stored in vPIC dataset. This applies to only "Look up" type of variables.
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "GetVehicleVariableValuesList", parameters: "VARIABLENAME", usage: "GetVehicleVariableValuesList VARIABLENAME=battery")]
         public VehicleDataResponse<VariableValuesResult> GetVehicleVariableValuesList(string variableName)
         {
             return GetVehicleVariableValuesListAsync(variableName).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Request a list of available Model Years for a given product type (Vehicle). 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OdiDataResponse<OdiModelYearsResult>> ODI_GetAllModelYearsAsync()
+        {
+            return await _recallsRestApi.GetAsync<OdiDataResponse<OdiModelYearsResult>>("vehicle");
+        }
+
+        /// <summary>
+        /// Request a list of available Model Years for a given product type (Vehicle). 
+        /// </summary>
+        /// <returns></returns>
+        [FunctionInfo(name: "ODI_GetAllModelYears", parameters: "", usage: "ODI_GetAllModelYears")]
+        public OdiDataResponse<OdiModelYearsResult> ODI_GetAllModelYears()
+        {
+            return ODI_GetAllModelYearsAsync().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Request a list of vehicle Makers by providing a specific vehicle ModelYear.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OdiDataResponse<OdiMakesModelYearResult>> ODI_GetAllMakesForModelYearAsync(int modelYear)
+        {
+            return await _recallsRestApi.GetAsync<OdiDataResponse<OdiMakesModelYearResult>>("vehicle", "modelyear", modelYear.ToString());
+        }
+
+        /// <summary>
+        /// Request a list of vehicle Makers by providing a specific vehicle ModelYear.
+        /// </summary>
+        /// <returns></returns>
+        [FunctionInfo(name: "ODI_GetAllMakesForModelYear", parameters: "MODELYEAR", usage: "ODI_GetAllMakesForModelYear MODELYEAR=2000")]
+        public OdiDataResponse<OdiMakesModelYearResult> ODI_GetAllMakesForModelYear(int modelYear)
+        {
+            return ODI_GetAllMakesForModelYearAsync(modelYear).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Request a list of vehicle Models by providing the vehicle Model Year and Maker.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OdiDataResponse<OdiModelsWithMakeModelYearResult>> ODI_GetAllModelsForMakeAndModelYearAsync(int modelYear, string make)
+        {
+            return await _recallsRestApi.GetAsync<OdiDataResponse<OdiModelsWithMakeModelYearResult>>("vehicle", "modelyear", modelYear.ToString(), "make", make);
+        }
+
+        /// <summary>
+        /// Request a list of vehicle Models by providing the vehicle Model Year and Maker.
+        /// </summary>
+        /// <returns></returns>
+        [FunctionInfo(name: "ODI_GetAllModelsForMakeAndModelYear", parameters: "MODELYEAR,MAKE", usage: "ODI_GetAllModelsForMakeAndModelYear MODELYEAR=2000 MAKE=saturn")]
+        public OdiDataResponse<OdiModelsWithMakeModelYearResult> ODI_GetAllModelsForMakeAndModelYear(int modelYear, string make)
+        {
+            return ODI_GetAllModelsForMakeAndModelYearAsync(modelYear, make).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Get recalls information for specific vehicle.
+        /// </summary>
+        /// <param name="modelYear"></param>
+        /// <param name="make"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<OdiDataResponse<OdiRecallsResult>> ODI_GetRecallsByVehicleAsync(int modelYear, string make, string model)
+        {
+            return await _recallsRestApi.GetAsync<OdiDataResponse<OdiRecallsResult>>("vehicle", "modelyear", modelYear.ToString(), "make", make, "model", model);
+        }
+
+        /// <summary>
+        /// Get recalls information for specific vehicle.
+        /// </summary>
+        /// <param name="modelYear"></param>
+        /// <param name="make"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [FunctionInfo(name: "ODI_GetRecallsByVehicle", parameters: "MODELYEAR,MAKE,MODEL", usage: "ODI_GetRecallsByVehicle MODELYEAR=2012 MAKE=bmw MODEL=3-series")]
+        public OdiDataResponse<OdiRecallsResult> ODI_GetRecallsByVehicle(int modelYear, string make, string model)
+        {
+            return ODI_GetRecallsByVehicleAsync(modelYear, make, model).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Request a list of recalls by providing the NHTSA Recall Campaign Number.
+        /// </summary>
+        /// <param name="cn">Campaign Number</param>
+        /// <returns></returns>
+        public async Task<OdiDataResponse<OdiRecallsCampaignResult>> ODI_GetRecallsByCampaignNumberAsync(string cn)
+        {
+            return await _recallsRestApi.GetAsync<OdiDataResponse<OdiRecallsCampaignResult>>("vehicle", "campaignnumber", cn);
+        }
+
+        /// <summary>
+        /// Request a list of recalls by providing the NHTSA Recall Campaign Number.
+        /// </summary>
+        /// <param name="cn">Campaign Number</param>
+        /// <returns></returns>
+        [FunctionInfo(name: "ODI_GetRecallsByCampaignNumber", parameters: "CN", usage: "ODI_GetRecallsByCampaignNumber CN=12v176000")]
+        public OdiDataResponse<OdiRecallsCampaignResult> ODI_GetRecallsByCampaignNumber(string cn)
+        {
+            return ODI_GetRecallsByCampaignNumberAsync(cn).GetAwaiter().GetResult();
         }
 
 
