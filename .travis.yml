@@ -1,0 +1,14 @@
+language: csharp
+mono: none
+dotnet: 1.1.5
+dist: trusty
+sudo: "required"
+before_install:
+  - sudo apt-get update
+install:
+ - curl -L -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+script:
+ - dotnet restore
+ - dotnet build ./NHTSA-VehicleData/NHTSA-VehicleData.csproj -c Release
+ - dotnet pack ./NHTSA-VehicleData/NHTSA-VehicleData.csproj -c Release -o ./nuget-package /p:Version=0.1.$TRAVIS_BUILD_NUMBER
+ - dotnet nuget push ./NHTSA-VehicleData/nuget-package/NHTSA-VehicleData.0.1.$TRAVIS_BUILD_NUMBER.nupkg -k $NUGET_API_KEY -s https://www.nuget.org/api/v2/package

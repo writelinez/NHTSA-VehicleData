@@ -3,6 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RootNamespace>NHTSAVehicleData</RootNamespace>
+    <Authors>Chris Bardsley</Authors>
+    <Company>Write Linez LLC</Company>
+    <Description>NHTSA Vehicle Data Api for dotnet core 1.x
+NHTSA is the National Highway Safety Administration. This Api only wrapps standard REST calls to their servers.</Description>
+    <Copyright>Copyright (c) 2017 writelinez</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/writelinez/NHTSA-VehicleData/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/writelinez/NHTSA-VehicleData</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/writelinez/NHTSA-VehicleData</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>nhtsa, vehicle, api, recalls, vin, number, dotnetcore, dotnet</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
