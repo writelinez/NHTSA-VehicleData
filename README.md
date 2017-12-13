@@ -12,3 +12,6 @@ Install the NuGet Package in your project using PM Console or the GUI in Visual 
 `adf`
 
 Register the library with dependecy injection in Startup.cs
+
+
+### Usage
