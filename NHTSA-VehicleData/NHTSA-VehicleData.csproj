@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>NHTSAVehicleData</RootNamespace>
     <Authors>Chris Bardsley</Authors>
     <Company>Write Linez LLC</Company>
-    <Description>NHTSA Vehicle Data Api for dotnet core 1.x
+    <Description>NHTSA Vehicle Data Api for dotnet core 2.x
 NHTSA is the National Highway Safety Administration. This Api only wrapps standard REST calls to their servers.</Description>
     <Copyright>Copyright (c) 2017 writelinez</Copyright>
     <PackageLicenseUrl>https://raw.githubusercontent.com/writelinez/NHTSA-VehicleData/master/LICENSE</PackageLicenseUrl>
