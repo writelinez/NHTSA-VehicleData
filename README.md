@@ -1,5 +1,5 @@
 # NHTSA-VehicleData
-NHTSA Vehicle Data Api for dotnet core 1.x
+NHTSA Vehicle Data Api for dotnet core 2.0
 
 NHTSA is the National Highway Safety Administration. This Api only wrapps standard REST calls to their servers. 
 More information on the NHTSA's API can be found [here](https://vpic.nhtsa.dot.gov/api/)
@@ -9,7 +9,7 @@ and the vehicle recall data API can be found [here](https://one.nhtsa.gov/webapi
 ### Installation
 Install the NuGet Package in your project using PM Console or the GUI in Visual Studio
 
-`Install-Package NHTSA-VehicleData -Version 0.1.0`
+`Install-Package NHTSA-VehicleData -Version 2.0.4`
 
 Register the library with dependecy injection in Startup.cs
 
