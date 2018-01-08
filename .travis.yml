@@ -10,5 +10,5 @@ install:
 script:
  - dotnet restore
  - dotnet build ./NHTSA-VehicleData/NHTSA-VehicleData.csproj -c Release
- - dotnet pack ./NHTSA-VehicleData/NHTSA-VehicleData.csproj -c Release -o ./nuget-package /p:Version=0.1.$TRAVIS_BUILD_NUMBER
- - dotnet nuget push ./NHTSA-VehicleData/nuget-package/NHTSA-VehicleData.0.2.$TRAVIS_BUILD_NUMBER.nupkg -k $NUGET_API_KEY -s https://www.nuget.org/api/v2/package
+ - dotnet pack ./NHTSA-VehicleData/NHTSA-VehicleData.csproj -c Release -o ./nuget-package /p:Version=2.0.$TRAVIS_BUILD_NUMBER
+ - dotnet nuget push ./NHTSA-VehicleData/nuget-package/NHTSA-VehicleData.2.0.$TRAVIS_BUILD_NUMBER.nupkg -k $NUGET_API_KEY -s https://www.nuget.org/api/v2/package
